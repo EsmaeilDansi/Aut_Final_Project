@@ -21,6 +21,7 @@
         </activity>
         <activity android:name="audioStego"/>
         <activity android:name="audioExtract"/>
+        <activity android:name=".san"/>
     </application>
 
 </manifest>

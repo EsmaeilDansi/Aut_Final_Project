@@ -4,6 +4,10 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
 
+import org.eazegraph.lib.charts.ValueLineChart;
+import org.eazegraph.lib.models.ValueLinePoint;
+import org.eazegraph.lib.models.ValueLineSeries;
+
 import androidx.annotation.Nullable;
 
 public class san extends Activity {
