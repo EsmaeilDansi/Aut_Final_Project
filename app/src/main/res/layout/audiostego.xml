@@ -16,11 +16,10 @@
         android:text="انتخاب صدا"
         android:textColor="@android:color/background_dark"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.46"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.385"
+        app:layout_constraintVertical_bias="0.423"
         tools:background="#f9fafb" />
 
     <Button
@@ -32,11 +31,10 @@
         android:textSize="14sp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.462"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.499"
+        app:layout_constraintVertical_bias="0.521"
         tools:textColor="@android:color/black" />
 
     <Button
@@ -63,11 +61,10 @@
         android:text="پخش بعد از درج"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.466"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.471" />
+        app:layout_constraintVertical_bias="0.497" />
 
     <Button
         android:id="@+id/bt_6"
@@ -86,20 +83,20 @@
 
     <EditText
         android:id="@+id/et_1"
-        android:layout_width="323dp"
-        android:layout_height="56dp"
+        android:layout_width="335dp"
+        android:layout_height="46dp"
         android:layout_marginTop="48dp"
         android:layout_marginBottom="8dp"
         android:background="@android:color/background_light"
         android:ems="10"
-        android:hint="پیام"
+        android:hint="message"
         android:inputType="textPersonName"
         android:textColor="@android:color/background_dark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.174" />
+        app:layout_constraintVertical_bias="0.143" />
 
     <RadioButton
         android:id="@+id/rb_2"
@@ -114,7 +111,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.071" />
+        app:layout_constraintVertical_bias="0.061" />
 
     <RadioButton
         android:id="@+id/rb_1"
@@ -126,11 +123,11 @@
         android:onClick="press"
         android:text="pvd "
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.052"
+        app:layout_constraintHorizontal_bias="0.047"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.128" />
+        app:layout_constraintVertical_bias="0.114" />
 
     <Button
         android:id="@+id/share"
@@ -146,5 +143,23 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.083" />
+
+    <EditText
+        android:id="@+id/key"
+        android:layout_width="214dp"
+        android:layout_height="32dp"
+        android:layout_marginEnd="96dp"
+        android:layout_marginRight="96dp"
+        android:background="@android:color/background_light"
+        android:ems="10"
+        android:maxLength="8"
+        android:gravity="center"
+        android:hint="password"
+        android:inputType="phone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.311" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

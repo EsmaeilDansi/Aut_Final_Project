@@ -849,5 +849,23 @@ public class audioStego extends Activity {
         }
 
     }
+    private byte[] setPas(byte [] audio,String pas){
+        String  stream ="";
+        char [] paschar=pas.toCharArray();
+        for(int i=0;i<paschar.length;i++){
+            String  ch=Integer.toBinaryString(paschar[i]);
+            while (ch.length()<8){
+                ch=0+ch;
+            }
+            stream=stream+ch;
+        }
+        for(int i=0;i<64;i++){
+            char c=stream.charAt(i);
+            if((int)c!=(int)audio[i+400]%2){
+                audio[i+400]=(byte)(audio[i+400]+1);
+            }
+        }
+        return audio;
+    }
 }
 
