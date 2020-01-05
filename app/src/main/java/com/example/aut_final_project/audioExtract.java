@@ -19,8 +19,7 @@ import android.provider.MediaStore;
 
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.RadioButton;
+
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +29,7 @@ import java.io.FileInputStream;
 
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -76,7 +76,7 @@ public class audioExtract extends Activity {
                 tv.setVisibility(View.INVISIBLE);
                 tv.setText("");
                 { if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                    Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                    Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                     intent.addCategory(Intent.CATEGORY_OPENABLE);
                     intent.setType("audio/*");
                     startActivityForResult(Intent.createChooser(intent, "Select audio"), 2);
@@ -160,6 +160,7 @@ public class audioExtract extends Activity {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -344,22 +345,24 @@ public class audioExtract extends Activity {
             if (p1 == 0)
             {
                 mp1.start();
+                b.setText("توقف پخش");
                 p1 = 1;
             }
             else if (p1 == 1) {
+                b.setText("پخش");
                 mp1.pause();
                 p1 = 0;
             }
         }
     }
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public static String getRealPathFromURI_API19(final Context context, final Uri uri)
     {
 
         final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
 
-        // DocumentProvider
+
         if (isKitKat && DocumentsContract.isDocumentUri(context, uri)) {
-            // ExternalStorageProvider
             if (isExternalStorageDocument(uri)) {
                 final String docId = DocumentsContract.getDocumentId(uri);
                 final String[] split = docId.split(":");
@@ -370,7 +373,6 @@ public class audioExtract extends Activity {
                 }
 
             }
-            // DownloadsProvider
             else if (isDownloadsDocument(uri)) {
 
                 final String id = DocumentsContract.getDocumentId(uri);
@@ -379,7 +381,7 @@ public class audioExtract extends Activity {
 
                 return getDataColumn(context, contentUri, null, null);
             }
-            // MediaProvider
+
             else if (isMediaDocument(uri)) {
                 final String docId = DocumentsContract.getDocumentId(uri);
                 final String[] split = docId.split(":");
@@ -402,16 +404,12 @@ public class audioExtract extends Activity {
                 return getDataColumn(context, contentUri, selection, selectionArgs);
             }
         }
-        // MediaStore (and general)
         else if ("content".equalsIgnoreCase(uri.getScheme())) {
-
-            // Return the remote address
             if (isGooglePhotosUri(uri))
                 return uri.getLastPathSegment();
 
             return getDataColumn(context, uri, null, null);
         }
-        // File
         else if ("file".equalsIgnoreCase(uri.getScheme())) {
             return uri.getPath();
         }
@@ -443,52 +441,20 @@ public class audioExtract extends Activity {
         return null;
     }
 
-
-    /**
-     * @param uri The Uri to check.
-     * @return Whether the Uri authority is ExternalStorageProvider.
-     */
     public static boolean isExternalStorageDocument(Uri uri) {
         return "com.android.externalstorage.documents".equals(uri.getAuthority());
     }
 
-    /**
-     * @param uri The Uri to check.
-     * @return Whether the Uri authority is DownloadsProvider.
-     */
     public static boolean isDownloadsDocument(Uri uri) {
         return "com.android.providers.downloads.documents".equals(uri.getAuthority());
     }
 
-    /**
-     * @param uri The Uri to check.
-     * @return Whether the Uri authority is MediaProvider.
-     */
     public static boolean isMediaDocument(Uri uri) {
         return "com.android.providers.media.documents".equals(uri.getAuthority());
     }
 
-    /**
-     * @param uri The Uri to check.
-     * @return Whether the Uri authority is Google Photos.
-     */
     public static boolean isGooglePhotosUri(Uri uri) {
         return "com.google.android.apps.photos.content".equals(uri.getAuthority());
     }
-    private String getFilePathFromContentUri(Uri selectedVideoUri,
-                                             ContentResolver contentResolver) {
-        String filePath;
-        String[] filePathColumn = {MediaStore.MediaColumns.DATA};
-
-        Cursor cursor = contentResolver.query(selectedVideoUri, filePathColumn, null, null, null);
-        cursor.moveToFirst();
-
-        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-        filePath = cursor.getString(columnIndex);
-        cursor.close();
-        return filePath;
-    }
-
-
 
 }

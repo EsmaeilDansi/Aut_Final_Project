@@ -39,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
-        Toast.makeText(getBaseContext(), "Steganography and SmartPhone ", Toast.LENGTH_SHORT).show();
 
 
     }

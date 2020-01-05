@@ -32,6 +32,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -76,11 +77,11 @@ public class audioStego extends Activity {
         rb1 = (RadioButton) findViewById(R.id.rb_1);
         rb2 = (RadioButton) findViewById(R.id.rb_2);
         share = (Button) findViewById(R.id.share);
-        String root = Environment.getExternalStorageDirectory().toString();
+        final String root = Environment.getExternalStorageDirectory().toString();
         File myDir = new File(root + "/Aut_steganography");
         myDir.mkdirs();
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String fname = "صدا_" + timeStamp + ".mp3";
+        final String fname = "صدا_" + timeStamp + ".mp3";
         final File audiofile = new File(myDir, fname);
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.READ_EXTERNAL_STORAGE)
@@ -103,7 +104,7 @@ public class audioStego extends Activity {
             public void onClick(View v) {
 
                 if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                    Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                    Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                     intent.addCategory(Intent.CATEGORY_OPENABLE);
                     intent.setType("audio/*");
                     startActivityForResult(Intent.createChooser(intent, "Select audio"), 2);
@@ -125,8 +126,10 @@ public class audioStego extends Activity {
                 if (p1 == 1) {
                     mp1.start();
                     p1 = 0;
+                    c.setText("توقف پخش");
                 } else if (p1 == 0) {
                     mp1.pause();
+                    c.setText("پخش");
                     p1 = 1;
                 }
             }
@@ -201,14 +204,14 @@ public class audioStego extends Activity {
         e.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (stego == null) {
-                    Toast.makeText(getApplicationContext(), "ابتدا درج کنید", Toast.LENGTH_SHORT).show();
-                } else if (p2 == 1) {
+                if (p2 == 1) {
                     mp2.start();
                     p2 = 0;
+                    e.setText("توقف پخش");
                 } else if (p2 == 0) {
                     mp2.pause();
                     p2 = 1;
+                    e.setText("پخش");
                 }
             }
         });
@@ -218,21 +221,21 @@ public class audioStego extends Activity {
                 if (stego == null) {
                     Toast.makeText(getApplicationContext(), "ابتدا درج کنید.", Toast.LENGTH_LONG).show();
                 } else {
-                    int h = getblock() - 99;
+                    int h = getblock() - 999;
                     int b1[] = new int[h];
                     int b2[] = new int[h];
 
 
-                    for (int j = 100; j < 100 + h; j++) {
-                        b1[j - 100] = (int) audio1[j];
+                    for (int j = 1000; j < 1000 + h; j++) {
+                        b1[j - 1000] = (int) audio1[j];
                     }
-                    for (int j = 100; j < 100 + h; j++) {
-                        b2[j - 100] = (int) stego[j];
+                    for (int j = 1000; j < 1000 + h; j++) {
+                        b2[j - 1000] = (int) stego[j];
                     }
                     Intent intent = new Intent(getApplicationContext(), san.class);
                     intent.putExtra("cover", b1);
                     intent.putExtra("stego", b2);
-                    i = 100;
+                    i = 1000;
                     startActivity(intent);
                 }
             }
@@ -240,11 +243,13 @@ public class audioStego extends Activity {
         share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent();
+                Intent intent = new Intent();
                 intent.setType("audio/*");
                 intent.setAction(Intent.ACTION_SEND);
-                intent.putExtra("audio",audio);
-                startActivity(intent);
+                String path = root + "/Aut_steganography/" + fname;
+                Uri uri = Uri.parse(path);
+                intent.putExtra(Intent.EXTRA_STREAM, uri);
+                startActivity(Intent.createChooser(intent, "اشرتاک گذاری صوت "));
             }
         });
     }
@@ -265,6 +270,7 @@ public class audioStego extends Activity {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         {
@@ -278,7 +284,7 @@ public class audioStego extends Activity {
                         audio = getbyte(audio_file);
                         audio1 = getbyte(audio_file);
                         // Toast.makeText(getApplicationContext(), "ظرفیت با الگوریتم pvd"+pvdCapacity(audio),Toast.LENGTH_LONG).show();
-                      //  Toast.makeText(getApplicationContext()," ظرفیت با الگوریتl جدید " + newMethodCapacity(audio),Toast.LENGTH_LONG).show();
+                        //  Toast.makeText(getApplicationContext()," ظرفیت با الگوریتl جدید " + newMethodCapacity(audio),Toast.LENGTH_LONG).show();
                         e.setVisibility(View.GONE);
                         share.setVisibility(View.GONE);
                         g.setVisibility(View.GONE);
@@ -721,6 +727,7 @@ public class audioStego extends Activity {
         return i;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public static String getRealPathFromURI_API19(final Context context, final Uri uri) {
         final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
         if (isKitKat && DocumentsContract.isDocumentUri(context, uri)) {
@@ -816,20 +823,33 @@ public class audioStego extends Activity {
         double capacity = 0;
         int lenght = audio.length;
         int i = 100;
-        while (i < lenght-1) {
-            int x=(int)(audio[i]+127);
-            int y=(int)(audio[i+1]+127);
+        while (i < lenght - 1) {
+            int x = (int) (audio[i] + 127);
+            int y = (int) (audio[i + 1] + 127);
             int d = abs(y - x);
-            if(d!=0){
-                capacity = capacity+(abs((int) floor((log10(d) / (log10(2))))));
+            if (d != 0) {
+                capacity = capacity + (abs((int) floor((log10(d) / (log10(2))))));
             }
-            i=i+2;
+            i = i + 2;
         }
         return capacity;
     }
-    public int newMethodCapacity(byte audio[]){
-        int length=(int)audio.length/3;
-        return length*5;
+
+    public int newMethodCapacity(byte audio[]) {
+        int length = (int) audio.length / 3;
+        return length * 5;
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (mp1 != null) {
+            mp1.pause();
+        }
+        if (mp2 != null) {
+            mp2.pause();
+        }
+
     }
 }
 
