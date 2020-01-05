@@ -16,25 +16,19 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
-
 import android.view.View;
 import android.widget.Button;
-
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
-
 import java.io.File;
 import java.io.FileInputStream;
-
-
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import static java.lang.Math.abs;
-import static java.lang.Math.ceil;
 import static java.lang.Math.floor;
 import static java.lang.Math.log10;
 import static java.lang.Math.pow;
@@ -46,6 +40,7 @@ public class audioExtract extends Activity {
     int p1=0;
     File file;
     int len =0;
+    EditText pas;
     String letters="";
     byte audio[]=null;
     @Override
@@ -57,6 +52,7 @@ public class audioExtract extends Activity {
         b=(Button)findViewById(R.id.bt_2);
         c=(Button)findViewById(R.id.bt_3);
         tv=(TextView)findViewById(R.id.tv_1);
+        pas=(EditText)findViewById(R.id.pas);
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.READ_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -101,43 +97,47 @@ public class audioExtract extends Activity {
                 }
 
                 else {
+                    if (checkPas(audio, pas.getText().toString())) {
+                        if ((int) audio[480] == -6) {
+                            tv.setVisibility(View.VISIBLE);
+                            pas.setText("");
+                            for (int i = 1; i < 11; i++) {
+                                if (audio[511 - i] >= 2) {
+                                    int k = (int) audio[511 - i] % 2;
+                                    len = k * (int) pow(2, i - 1) + len;
+                                } else {
+                                    len = (int) audio[511 - i] * (int) pow(2, i - 1) + len;
+                                }
 
-                    if ((int) audio[480] == -6) {
-                        tv.setVisibility(View.VISIBLE);
-                        for (int i = 1; i < 11; i++) {
-                            if (audio[511 - i] >= 2) {
-                                int k = (int) audio[511 - i] % 2;
-                                len = k * (int) pow(2, i - 1) + len;
-                            } else {
-                                len = (int) audio[511 - i] * (int) pow(2, i - 1) + len;
                             }
+                            String message = back(decoding(audio));
+                            tv.setText(message);
+                            Toast.makeText(getApplicationContext(), "" + message, Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "الگوریتم pvd ", Toast.LENGTH_SHORT).show();
 
                         }
-                        String message = back(decoding(audio));
-                        tv.setText(message);
-                        Toast.makeText(getApplicationContext(), "" + message, Toast.LENGTH_LONG).show();
-                        Toast.makeText(getApplicationContext(),"الگوریتم pvd " ,Toast.LENGTH_SHORT).show();
+                        if ((int) audio[480] == -7) {
+                            pas.setText("");
+                            tv.setVisibility(View.VISIBLE);
+                            for (int i = 1; i < 11; i++) {
+                                if (audio[511 - i] >= 2) {
+                                    int k = (int) audio[511 - i] % 2;
+                                    len = k * (int) pow(2, i - 1) + len;
+                                } else {
+                                    len = (int) audio[511 - i] * (int) pow(2, i - 1) + len;
+                                }
 
-                    }
-                    if ((int) audio[480] == -7) {
-                        tv.setVisibility(View.VISIBLE);
-                        for (int i = 1; i < 11; i++) {
-                            if (audio[511 - i] >= 2) {
-                                int k = (int) audio[511 - i] % 2;
-                                len = k * (int) pow(2, i - 1) + len;
-                            } else {
-                                len = (int) audio[511 - i] * (int) pow(2, i - 1) + len;
                             }
-
+                            String message = back(decoding2(audio));
+                            tv.setText(message);
+                            Toast.makeText(getApplicationContext(), "" + message, Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "الگوریتم جدید", Toast.LENGTH_LONG).show();
+                        } else if (audio[480] != -6 & audio[480] != -7) {
+                            Toast.makeText(getApplicationContext(), "درج صورت نگرفته است ", Toast.LENGTH_LONG).show();
                         }
-                        String message = back(decoding2(audio));
-                        tv.setText(message);
-                        Toast.makeText(getApplicationContext(), "" + message, Toast.LENGTH_LONG).show();
-                        Toast.makeText(getApplicationContext(),"الگوریتم جدید" ,Toast.LENGTH_LONG).show();
                     }
-                    else if(audio[480]!=-6  & audio[480]!=-7)
-                    {
-                        Toast.makeText(getApplicationContext(), "درج صورت نگرفته است ", Toast.LENGTH_LONG).show();
+                    else{
+                        Toast.makeText(getApplicationContext(),   " پسوورد اشتباه است  " ,Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -174,6 +174,7 @@ public class audioExtract extends Activity {
                 audio=getBytes(file);
                 b.setVisibility(View.VISIBLE);
                 c.setVisibility(View.VISIBLE);
+                pas.setVisibility(View.VISIBLE);
 
             }
         }
@@ -461,7 +462,37 @@ public class audioExtract extends Activity {
         while (pas.length()<8){
             pas=pas+0;
         }
-        return tr
+        char [] paschar=pas.toCharArray();
+        String passtr="";
+        String str="";
+        for(int i=0;i<8;i++){
+            String c=Integer.toBinaryString(paschar[i]);
+            while (c.length()<8){
+                c=0+c;
+            }
+            passtr=passtr+c;
+        }
+        for(int i=0;i<64;i++){
+            if(abs((int)audio[i+400])%2==0){
+                str=str+'0';
+            }else{
+                str=str+'1';
+            }
+        }
+        for(int i=0;i<64;i++){
+            if(str.charAt(i)!=passtr.charAt(i))
+            {
+                return false;
+            }
+        }
+        return true;
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if(mp1!=null){
+            mp1.pause();
+        }
+    }
 }

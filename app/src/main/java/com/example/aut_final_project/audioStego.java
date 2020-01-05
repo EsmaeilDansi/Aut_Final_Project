@@ -138,6 +138,7 @@ public class audioStego extends Activity {
             @Override
             public void onClick(View v) {
                 mp1.pause();
+                pas.setText("");
                 if (et.getText() != null) {
                     message = message + et.getText().toString();
                     m = message.toCharArray();
@@ -195,8 +196,8 @@ public class audioStego extends Activity {
                 } else {
                     Toast.makeText(getApplicationContext(), "پیام را وارد کنید.", Toast.LENGTH_SHORT).show();
                 }
-                embedding.setVisibility(View.GONE);
-                c.setVisibility(View.GONE);
+                embedding.setVisibility(View.INVISIBLE);
+                c.setVisibility(View.INVISIBLE);
                 e.setVisibility(View.VISIBLE);
                 share.setVisibility(View.VISIBLE);
                 g.setVisibility(View.VISIBLE);
@@ -277,16 +278,16 @@ public class audioStego extends Activity {
                 if (requestCode == 2) {
                     if (resultCode == RESULT_OK) {
                         Uri uri = data.getData();
-                        String path = uri.getPath();
                         mp1 = MediaPlayer.create(getApplicationContext(), uri);
                         audio_file = new File(getRealPathFromURI_API19(getApplicationContext(), uri));
                         audio = getbyte(audio_file);
                         audio1 = getbyte(audio_file);
-                        e.setVisibility(View.GONE);
-                        share.setVisibility(View.GONE);
-                        g.setVisibility(View.GONE);
+                        e.setVisibility(View.INVISIBLE);
+                        share.setVisibility(View.INVISIBLE);
+                        g.setVisibility(View.INVISIBLE);
                         c.setVisibility(View.VISIBLE);
                         embedding.setVisibility(View.VISIBLE);
+                        pas.setVisibility(View.VISIBLE);
                     }
                 }
 
@@ -851,21 +852,28 @@ public class audioStego extends Activity {
     }
     private byte[] setPas(byte [] audio,String pas){
         String  stream ="";
+        String srt2="";
 
         while (pas.length()<8){
             pas=pas+0;
         }
         char [] paschar=pas.toCharArray();
         for(int i=0;i<paschar.length;i++){
-            String  ch=Integer.toBinaryString(paschar[i]);
+            String ch=Integer.toBinaryString(paschar[i]);
             while (ch.length()<8){
                 ch=0+ch;
             }
             stream=stream+ch;
         }
         for(int i=0;i<64;i++){
-            char c=stream.charAt(i);
-            if((int)c!=(int)audio[i+400]%2){
+            if(abs((int)audio[i+400])%2==0){
+                srt2=srt2+'0';
+            }else{
+                srt2=srt2+'1';
+            }
+        }
+        for(int i=0;i<64;i++){
+            if(srt2.charAt(i)!=stream.charAt(i)){
                 audio[i+400]=(byte)(audio[i+400]+1);
             }
         }
