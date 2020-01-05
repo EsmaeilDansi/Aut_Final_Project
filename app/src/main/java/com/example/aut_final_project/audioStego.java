@@ -16,7 +16,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
-
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -283,8 +282,6 @@ public class audioStego extends Activity {
                         audio_file = new File(getRealPathFromURI_API19(getApplicationContext(), uri));
                         audio = getbyte(audio_file);
                         audio1 = getbyte(audio_file);
-                        // Toast.makeText(getApplicationContext(), "ظرفیت با الگوریتم pvd"+pvdCapacity(audio),Toast.LENGTH_LONG).show();
-                        //  Toast.makeText(getApplicationContext()," ظرفیت با الگوریتl جدید " + newMethodCapacity(audio),Toast.LENGTH_LONG).show();
                         e.setVisibility(View.GONE);
                         share.setVisibility(View.GONE);
                         g.setVisibility(View.GONE);
@@ -823,12 +820,13 @@ public class audioStego extends Activity {
         double capacity = 0;
         int lenght = audio.length;
         int i = 100;
-        while (i < lenght - 1) {
+        while (i < lenght - 3) {
             int x = (int) (audio[i] + 127);
             int y = (int) (audio[i + 1] + 127);
             int d = abs(y - x);
-            if (d != 0) {
-                capacity = capacity + (abs((int) floor((log10(d) / (log10(2))))));
+            if(d>=1) {
+                int log = (int) floor((log10(d) / (log10(2))));
+                capacity=capacity+log;
             }
             i = i + 2;
         }
