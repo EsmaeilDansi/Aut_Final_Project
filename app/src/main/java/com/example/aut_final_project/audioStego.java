@@ -138,7 +138,6 @@ public class audioStego extends Activity {
             @Override
             public void onClick(View v) {
                 mp1.pause();
-                pas.setText("");
                 if (et.getText() != null) {
                     message = message + et.getText().toString();
                     m = message.toCharArray();
@@ -158,6 +157,7 @@ public class audioStego extends Activity {
                         n[i] = Character.digit(bit.charAt(i), 8);
                     }
                     audio=setPas(audio,pas.getText().toString());
+                    pas.setText("");
                     if (algorim == 0) {
                         stego = pvd(audio, n, -6);
                         mp2 = Mp3(stego);
