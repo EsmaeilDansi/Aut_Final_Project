@@ -102,7 +102,7 @@ public class audioExtract extends Activity {
 
                 else {
 
-                    if ((int) audio[400] == -6) {
+                    if ((int) audio[480] == -6) {
                         tv.setVisibility(View.VISIBLE);
                         for (int i = 1; i < 11; i++) {
                             if (audio[511 - i] >= 2) {
@@ -119,7 +119,7 @@ public class audioExtract extends Activity {
                         Toast.makeText(getApplicationContext(),"الگوریتم pvd " ,Toast.LENGTH_SHORT).show();
 
                     }
-                    if ((int) audio[400] == -7) {
+                    if ((int) audio[480] == -7) {
                         tv.setVisibility(View.VISIBLE);
                         for (int i = 1; i < 11; i++) {
                             if (audio[511 - i] >= 2) {
@@ -135,7 +135,7 @@ public class audioExtract extends Activity {
                         Toast.makeText(getApplicationContext(), "" + message, Toast.LENGTH_LONG).show();
                         Toast.makeText(getApplicationContext(),"الگوریتم جدید" ,Toast.LENGTH_LONG).show();
                     }
-                    else if(audio[400]!=-6  & audio[400]!=-7)
+                    else if(audio[480]!=-6  & audio[480]!=-7)
                     {
                         Toast.makeText(getApplicationContext(), "درج صورت نگرفته است ", Toast.LENGTH_LONG).show();
                     }
@@ -455,6 +455,13 @@ public class audioExtract extends Activity {
 
     public static boolean isGooglePhotosUri(Uri uri) {
         return "com.google.android.apps.photos.content".equals(uri.getAuthority());
+    }
+    public boolean checkPas(byte [] audio ,String pas)
+    {
+        while (pas.length()<8){
+            pas=pas+0;
+        }
+        return tr
     }
 
 }

@@ -44,7 +44,7 @@ import static java.lang.Math.pow;
 public class audioStego extends Activity {
     Button b, c, embedding, e, g, share;
     RadioButton rb1, rb2;
-    EditText et;
+    EditText et, pas;
     MediaPlayer mp1, mp2;
     int p1 = 1;
     int p2 = 1;
@@ -72,6 +72,7 @@ public class audioStego extends Activity {
         embedding = (Button) findViewById(R.id.bt_4);
         e = (Button) findViewById(R.id.bt_5);
         g = (Button) findViewById(R.id.bt_6);
+        pas=(EditText)findViewById(R.id.key);
         et = (EditText) findViewById(R.id.et_1);
         rb1 = (RadioButton) findViewById(R.id.rb_1);
         rb2 = (RadioButton) findViewById(R.id.rb_2);
@@ -155,6 +156,7 @@ public class audioStego extends Activity {
                     for (int i = 0; i < bit.length(); i++) {
                         n[i] = Character.digit(bit.charAt(i), 8);
                     }
+                    audio=setPas(audio,pas.getText().toString());
                     if (algorim == 0) {
                         stego = pvd(audio, n, -6);
                         mp2 = Mp3(stego);
@@ -223,8 +225,6 @@ public class audioStego extends Activity {
                     int h = getblock() - 999;
                     int b1[] = new int[h];
                     int b2[] = new int[h];
-
-
                     for (int j = 1000; j < 1000 + h; j++) {
                         b1[j - 1000] = (int) audio1[j];
                     }
@@ -379,7 +379,7 @@ public class audioStego extends Activity {
                 audio[511 - q] = 0;
             }
         }
-        audio[400] = (byte) p;
+        audio[480] = (byte) p;
         int i = 1000;
         String vb = "";
         while (j < n.length) {
@@ -500,7 +500,7 @@ public class audioStego extends Activity {
                 audio[511 - q] = 0;
             }
         }
-        audio[400] = (byte) p;
+        audio[480] = (byte) p;
         int j = 0;
         int f = 0;
         int mes = 0;
@@ -851,6 +851,10 @@ public class audioStego extends Activity {
     }
     private byte[] setPas(byte [] audio,String pas){
         String  stream ="";
+
+        while (pas.length()<8){
+            pas=pas+0;
+        }
         char [] paschar=pas.toCharArray();
         for(int i=0;i<paschar.length;i++){
             String  ch=Integer.toBinaryString(paschar[i]);
