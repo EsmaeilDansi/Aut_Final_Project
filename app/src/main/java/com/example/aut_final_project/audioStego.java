@@ -21,7 +21,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -30,11 +29,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Collections;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.regex.Pattern;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
@@ -47,9 +42,8 @@ import static java.lang.Math.log10;
 import static java.lang.Math.pow;
 
 public class audioStego extends Activity {
-    Button b, c, d, e, g, share;
+    Button b, c, embedding, e, g, share;
     RadioButton rb1, rb2;
-    TextView tv_1;
     EditText et;
     MediaPlayer mp1, mp2;
     int p1 = 1;
@@ -75,7 +69,7 @@ public class audioStego extends Activity {
         setContentView(R.layout.audiostego);
         b = (Button) findViewById(R.id.bt_2);
         c = (Button) findViewById(R.id.bt_3);
-        d = (Button) findViewById(R.id.bt_4);
+        embedding = (Button) findViewById(R.id.bt_4);
         e = (Button) findViewById(R.id.bt_5);
         g = (Button) findViewById(R.id.bt_6);
         et = (EditText) findViewById(R.id.et_1);
@@ -137,7 +131,7 @@ public class audioStego extends Activity {
                 }
             }
         });
-        d.setOnClickListener(new View.OnClickListener() {
+        embedding.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mp1.pause();
@@ -197,7 +191,8 @@ public class audioStego extends Activity {
                 } else {
                     Toast.makeText(getApplicationContext(), "پیام را وارد کنید.", Toast.LENGTH_SHORT).show();
                 }
-                d.setVisibility(View.GONE);
+                embedding.setVisibility(View.GONE);
+                c.setVisibility(View.GONE);
                 e.setVisibility(View.VISIBLE);
                 share.setVisibility(View.VISIBLE);
                 g.setVisibility(View.VISIBLE);
@@ -283,12 +278,12 @@ public class audioStego extends Activity {
                         audio = getbyte(audio_file);
                         audio1 = getbyte(audio_file);
                         // Toast.makeText(getApplicationContext(), "ظرفیت با الگوریتم pvd"+pvdCapacity(audio),Toast.LENGTH_LONG).show();
-                        Toast.makeText(getApplicationContext()," ظرفیت با الگوریتl جدید " + newMethodCapacity(audio),Toast.LENGTH_LONG).show();
+                      //  Toast.makeText(getApplicationContext()," ظرفیت با الگوریتl جدید " + newMethodCapacity(audio),Toast.LENGTH_LONG).show();
                         e.setVisibility(View.GONE);
                         share.setVisibility(View.GONE);
                         g.setVisibility(View.GONE);
                         c.setVisibility(View.VISIBLE);
-                        d.setVisibility(View.VISIBLE);
+                        embedding.setVisibility(View.VISIBLE);
                     }
                 }
 
@@ -299,7 +294,6 @@ public class audioStego extends Activity {
     byte[] getbyte(File file) {
         FileInputStream input = null;
         if (file.exists())
-
             try {
 
                 input = new FileInputStream(file);
@@ -356,33 +350,33 @@ public class audioStego extends Activity {
         char ch[] = c.toCharArray();
         int r = ch.length;
         for (int q = 1; q < 11; q++) {
-            int rem = (int) (audio[11 - q]) % 2;
+            int rem = (int) (audio[511 - q]) % 2;
             if (q <= r) {
-                if ((int) audio[11 - q] < 2) {
+                if ((int) audio[511 - q] < 2) {
                     if (ch[r - q] == '0') {
-                        audio[11 - q] = (byte) 0;
+                        audio[511 - q] = (byte) 0;
                     }
                     if (ch[r - q] == '1') {
-                        audio[11 - q] = (byte) 1;
+                        audio[511 - q] = (byte) 1;
                     }
                 } else {
                     if (rem == 1) {
                         if (ch[r - q] == '0') {
-                            audio[11 - q] = (byte) (audio[11 - q] + 1);
+                            audio[511 - q] = (byte) (audio[511 - q] + 1);
                         }
                     }
                     if (rem == 0) {
                         if (ch[r - q] == '1') {
-                            audio[11 - q] = (byte) (audio[11 - q] + 1);
+                            audio[511 - q] = (byte) (audio[511 - q] + 1);
                         }
                     }
                 }
             }
             if (q > r) {
-                audio[11 - q] = 0;
+                audio[511 - q] = 0;
             }
         }
-        audio[0] = (byte) p;
+        audio[400] = (byte) p;
         int i = 1000;
         String vb = "";
         while (j < n.length) {
@@ -477,33 +471,33 @@ public class audioStego extends Activity {
         char ch[] = c.toCharArray();
         int r = ch.length;
         for (int q = 1; q < 11; q++) {
-            int rem = (int) (audio[11 - q]) % 2;
+            int rem = (int) (audio[511 - q]) % 2;
             if (q <= r) {
-                if ((int) audio[11 - q] < 2) {
+                if ((int) audio[511 - q] < 2) {
                     if (ch[r - q] == '0') {
-                        audio[11 - q] = (byte) 0;
+                        audio[511 - q] = (byte) 0;
                     }
                     if (ch[r - q] == '1') {
-                        audio[11 - q] = (byte) 1;
+                        audio[511 - q] = (byte) 1;
                     }
                 } else {
                     if (rem == 1) {
                         if (ch[r - q] == '0') {
-                            audio[11 - q] = (byte) (audio[11 - q] + 1);
+                            audio[511 - q] = (byte) (audio[511 - q] + 1);
                         }
                     }
                     if (rem == 0) {
                         if (ch[r - q] == '1') {
-                            audio[11 - q] = (byte) (audio[11 - q] + 1);
+                            audio[511 - q] = (byte) (audio[511 - q] + 1);
                         }
                     }
                 }
             }
             if (q > r) {
-                audio[11 - q] = 0;
+                audio[511 - q] = 0;
             }
         }
-        audio[0] = (byte) p;
+        audio[400] = (byte) p;
         int j = 0;
         int f = 0;
         int mes = 0;

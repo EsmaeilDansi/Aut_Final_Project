@@ -73,6 +73,8 @@ public class audioExtract extends Activity {
             @Override
             public void onClick(View v)
             {
+                tv.setVisibility(View.INVISIBLE);
+                tv.setText("");
                 { if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                     Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
                     intent.addCategory(Intent.CATEGORY_OPENABLE);
@@ -100,13 +102,14 @@ public class audioExtract extends Activity {
 
                 else {
 
-                    if ((int) audio[0] == -6) {
+                    if ((int) audio[400] == -6) {
+                        tv.setVisibility(View.VISIBLE);
                         for (int i = 1; i < 11; i++) {
-                            if (audio[11 - i] >= 2) {
-                                int k = (int) audio[11 - i] % 2;
+                            if (audio[511 - i] >= 2) {
+                                int k = (int) audio[511 - i] % 2;
                                 len = k * (int) pow(2, i - 1) + len;
                             } else {
-                                len = (int) audio[11 - i] * (int) pow(2, i - 1) + len;
+                                len = (int) audio[511 - i] * (int) pow(2, i - 1) + len;
                             }
 
                         }
@@ -116,14 +119,14 @@ public class audioExtract extends Activity {
                         Toast.makeText(getApplicationContext(),"الگوریتم pvd " ,Toast.LENGTH_SHORT).show();
 
                     }
-                    if ((int) audio[300] == -7) {
-
+                    if ((int) audio[400] == -7) {
+                        tv.setVisibility(View.VISIBLE);
                         for (int i = 1; i < 11; i++) {
-                            if (audio[11 - i] >= 2) {
-                                int k = (int) audio[11 - i] % 2;
+                            if (audio[511 - i] >= 2) {
+                                int k = (int) audio[511 - i] % 2;
                                 len = k * (int) pow(2, i - 1) + len;
                             } else {
-                                len = (int) audio[11 - i] * (int) pow(2, i - 1) + len;
+                                len = (int) audio[511 - i] * (int) pow(2, i - 1) + len;
                             }
 
                         }
@@ -132,7 +135,7 @@ public class audioExtract extends Activity {
                         Toast.makeText(getApplicationContext(), "" + message, Toast.LENGTH_LONG).show();
                         Toast.makeText(getApplicationContext(),"الگوریتم جدید" ,Toast.LENGTH_LONG).show();
                     }
-                    else if(audio[300]!=-6  & audio[300]!=-7)
+                    else if(audio[400]!=-6  & audio[400]!=-7)
                     {
                         Toast.makeText(getApplicationContext(), "درج صورت نگرفته است ", Toast.LENGTH_LONG).show();
                     }
@@ -141,8 +144,7 @@ public class audioExtract extends Activity {
             }
         });
     }
-    public void onRequestPermissionsResult(int requestCode,
-                                           String[] permissions, int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode) {
             case 1: {
 
@@ -169,20 +171,11 @@ public class audioExtract extends Activity {
                 mp1 = MediaPlayer.create(getApplicationContext(),uri );
                 file =new File(getRealPathFromURI_API19(getApplicationContext(),uri));
                 audio=getBytes(file);
+                b.setVisibility(View.VISIBLE);
+                c.setVisibility(View.VISIBLE);
 
             }
         }
-    }
-    public String getPath(Uri uri)
-    {
-        String[] projection = { MediaStore.Audio.Media.DATA };
-        Cursor cursor = getContentResolver().query(uri, projection, null, null, null);
-        if (cursor == null) return null;
-        int column_index =  cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA);
-        cursor.moveToFirst();
-        String s=cursor.getString(column_index);
-        cursor.close();
-        return s;
     }
     byte[] getBytes (File file)
     {

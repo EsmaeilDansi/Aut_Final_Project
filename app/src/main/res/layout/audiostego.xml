@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f43b687c"
-    tools:background="#7add70"
+    android:background="@drawable/bac1"
+    tools:background="@drawable/bac1"
     tools:layout_editor_absoluteY="81dp">
 
     <Button
         android:id="@+id/bt_2"
-        android:layout_width="144dp"
+        android:layout_width="141dp"
         android:layout_height="wrap_content"
         android:background="@android:color/background_light"
         android:text="انتخاب صدا"
@@ -25,63 +25,64 @@
 
     <Button
         android:id="@+id/bt_3"
-        android:layout_width="155dp"
-        android:layout_height="wrap_content"
+        android:layout_width="141dp"
+        android:layout_height="52dp"
         android:background="@android:color/background_light"
         android:text="پخش قبل از درج"
         android:textSize="14sp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.449"
+        app:layout_constraintHorizontal_bias="0.462"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.66"
+        app:layout_constraintVertical_bias="0.499"
         tools:textColor="@android:color/black" />
 
     <Button
         android:id="@+id/bt_4"
-        android:layout_width="161dp"
-        android:layout_height="48dp"
+        android:layout_width="141dp"
+        android:layout_height="52dp"
         android:layout_marginTop="36dp"
         android:background="@android:color/background_light"
         android:text="درج"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.46"
+        app:layout_constraintHorizontal_bias="0.461"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.591" />
+
+    <Button
+        android:id="@+id/bt_5"
+        android:layout_width="141dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="36dp"
+        android:background="@android:color/background_light"
+        android:text="پخش بعد از درج"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.466"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.471" />
 
     <Button
-        android:id="@+id/bt_5"
-        android:layout_width="164dp"
-        android:layout_height="46dp"
-        android:layout_marginTop="36dp"
-        android:background="@android:color/background_light"
-        android:text="پخش بعد از درج"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.465"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.642" />
-
-    <Button
         android:id="@+id/bt_6"
-        android:layout_width="181dp"
-        android:layout_height="46dp"
+        android:layout_width="140dp"
+        android:layout_height="41dp"
         android:layout_marginTop="12dp"
         android:background="@android:color/background_light"
         android:text="سنجش کیفیت"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.453"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.777" />
+        app:layout_constraintVertical_bias="0.721" />
 
     <EditText
         android:id="@+id/et_1"
@@ -109,11 +110,11 @@
         android:onClick="press"
         android:text="new"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.909"
+        app:layout_constraintHorizontal_bias="0.047"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.068" />
+        app:layout_constraintVertical_bias="0.071" />
 
     <RadioButton
         android:id="@+id/rb_1"
@@ -125,11 +126,11 @@
         android:onClick="press"
         android:text="pvd "
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.91"
+        app:layout_constraintHorizontal_bias="0.052"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.136" />
+        app:layout_constraintVertical_bias="0.128" />
 
     <Button
         android:id="@+id/share"
@@ -140,10 +141,10 @@
         android:background="@drawable/share"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.923"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.91" />
+        app:layout_constraintVertical_bias="0.083" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
