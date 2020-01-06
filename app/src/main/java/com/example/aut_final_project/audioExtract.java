@@ -138,6 +138,7 @@ public class audioExtract extends Activity {
                     }
                     else{
                         Toast.makeText(getApplicationContext(),   " پسوورد اشتباه است  " ,Toast.LENGTH_SHORT).show();
+                        pas.setText("");
                     }
                 }
 

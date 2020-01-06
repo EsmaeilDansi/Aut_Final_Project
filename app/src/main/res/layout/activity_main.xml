@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bac22"
-    tools:background="@drawable/bac22"
+    android:background="@drawable/b3"
+    tools:background="@drawable/b3"
     tools:context=".MainActivity">
 
     <Button

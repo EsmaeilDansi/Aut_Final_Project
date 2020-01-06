@@ -20,6 +20,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -53,6 +54,7 @@ public class audioStego extends Activity {
     final ContentResolver cr = null;
     final Context Cont = null;
     byte stego[] = null;
+    TextView mse,psnr;
 
     File audio_file;
     String message = "\t";
@@ -76,6 +78,8 @@ public class audioStego extends Activity {
         et = (EditText) findViewById(R.id.et_1);
         rb1 = (RadioButton) findViewById(R.id.rb_1);
         rb2 = (RadioButton) findViewById(R.id.rb_2);
+        mse=(TextView)findViewById(R.id.mse) ;
+        psnr=(TextView) findViewById(R.id.psnr);
         share = (Button) findViewById(R.id.share);
         final String root = Environment.getExternalStorageDirectory().toString();
         File myDir = new File(root + "/Aut_steganography");
@@ -196,6 +200,8 @@ public class audioStego extends Activity {
                 } else {
                     Toast.makeText(getApplicationContext(), "پیام را وارد کنید.", Toast.LENGTH_SHORT).show();
                 }
+                mse.setText(""+mse(audio1,stego,getblock()));
+                psnr.setText(""+psnr(audio1,stego,getblock()));
                 embedding.setVisibility(View.INVISIBLE);
                 c.setVisibility(View.INVISIBLE);
                 e.setVisibility(View.VISIBLE);
@@ -461,7 +467,6 @@ public class audioStego extends Activity {
                 mes = 0;
             }
         }
-        Toast.makeText(getApplicationContext(), "lengh=" + i, Toast.LENGTH_LONG).show();
         setblock(i);
         return audio;
 
@@ -712,7 +717,7 @@ public class audioStego extends Activity {
             t = t + 3;
             mes = 0;
         }
-        Toast.makeText(getApplicationContext(), "lenght=" + i, Toast.LENGTH_LONG).show();
+
         setblock(i);
         return audio;
     }
@@ -837,6 +842,25 @@ public class audioStego extends Activity {
     public int newMethodCapacity(byte audio[]) {
         int length = (int) audio.length / 3;
         return length * 5;
+    }
+
+    public  float mse(byte [] audio, byte stego [] ,int lenght){
+        int sum=0;
+        for(int i=1000; i<lenght;i++){
+            sum=sum+(int)pow((audio [i] -stego [i]),2);
+        }
+        return (float)sum/lenght;
+    }
+
+    public float psnr(byte [] audio, byte [] stego ,int lenght){
+        int sum=0;
+        for(int i=1000; i<lenght;i++){
+            sum=sum+(int)pow((audio [i] -stego [i]),2);
+        }
+        int mse= sum/lenght;
+        double psnr=10*log10(pow(127,2)/mse);
+        return (float) psnr;
+
     }
 
     @Override
