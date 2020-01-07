@@ -294,6 +294,8 @@ public class audioStego extends Activity {
                         c.setVisibility(View.VISIBLE);
                         embedding.setVisibility(View.VISIBLE);
                         pas.setVisibility(View.VISIBLE);
+                        Toast.makeText(getApplicationContext(),"pva"+pvdCapacity(audio),Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(),"new "+newMethodCapacity(audio),Toast.LENGTH_LONG).show();
                     }
                 }
 
@@ -827,10 +829,8 @@ public class audioStego extends Activity {
         int lenght = audio.length;
         int i = 100;
         while (i < lenght - 3) {
-            int x = (int) (audio[i] + 127);
-            int y = (int) (audio[i + 1] + 127);
-            int d = abs(y - x);
-            if(d>=1) {
+            int d = abs(audio[i+1]+127-(audio[i]+127));
+            if(d>=2) {
                 int log = (int) floor((log10(d) / (log10(2))));
                 capacity=capacity+log;
             }
@@ -840,8 +840,23 @@ public class audioStego extends Activity {
     }
 
     public int newMethodCapacity(byte audio[]) {
-        int length = (int) audio.length / 3;
-        return length * 5;
+        int i=100;
+        int sum=0;
+        while (i<audio.length-4)
+        {
+            int d=(int)abs(audio[i+2]+127-(audio[i]+127));
+            if(d>=1) {
+                int log = (int) floor((log10(d) / (log10(2))));
+                if(log>5){
+                    sum=sum+log;
+                }
+                else {
+                    sum=sum+5;
+                }
+            }
+            i=i+3;
+        }
+        return sum;
     }
 
     public  float mse(byte [] audio, byte stego [] ,int lenght){
