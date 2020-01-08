@@ -110,6 +110,7 @@ public class audioExtract extends Activity {
                                 }
 
                             }
+                            Toast.makeText(getApplicationContext(),""+len,Toast.LENGTH_LONG).show();
                             String message = back(decoding(audio));
                             tv.setText(message);
                             Toast.makeText(getApplicationContext(), "" + message, Toast.LENGTH_LONG).show();
@@ -128,6 +129,7 @@ public class audioExtract extends Activity {
                                 }
 
                             }
+                            Toast.makeText(getApplicationContext(),""+len,Toast.LENGTH_LONG).show();
                             String message = back(decoding2(audio));
                             tv.setText(message);
                             Toast.makeText(getApplicationContext(), "" + message, Toast.LENGTH_LONG).show();

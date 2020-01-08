@@ -30,6 +30,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.concurrent.ThreadLocalRandom;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -63,8 +64,9 @@ public class audioStego extends Activity {
     int u, j, f, t = 0;
     int algorim = 0;
     char m[];
-    int i;
+    static int i;
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -138,10 +140,12 @@ public class audioStego extends Activity {
                 }
             }
         });
+
         embedding.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mp1.pause();
+                et.setText(getnewText(et.getText().length()));
                 if (et.getText() != null) {
                     message = message + et.getText().toString();
                     m = message.toCharArray();
@@ -177,7 +181,7 @@ public class audioStego extends Activity {
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-                        Toast.makeText(getApplicationContext(), "پیام " + message + " در صوت درج شد .", Toast.LENGTH_LONG).show();
+                     //Toast.makeText(getApplicationContext(), "پیام " + message + " در صوت درج شد .", Toast.LENGTH_LONG).show();
                         message = "";
 
                     }
@@ -194,7 +198,7 @@ public class audioStego extends Activity {
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-                        Toast.makeText(getApplicationContext(), "پیام " + message + " در صوت درج شد .", Toast.LENGTH_LONG).show();
+                      //  Toast.makeText(getApplicationContext(), "پیام " + message + " در صوت درج شد .", Toast.LENGTH_LONG).show();
                         message = "";
                     }
                 } else {
@@ -207,6 +211,11 @@ public class audioStego extends Activity {
                 e.setVisibility(View.VISIBLE);
                 share.setVisibility(View.VISIBLE);
                 g.setVisibility(View.VISIBLE);
+                et.setText(""+audio.length);
+                pas.setText(""+getblock());
+
+              //  Toast.makeText(getApplicationContext(),""+getblock(),Toast.LENGTH_LONG).show();
+              //  Toast.makeText(getApplicationContext(),""+audio.length,Toast.LENGTH_LONG).show();
             }
         });
         e.setOnClickListener(new View.OnClickListener() {
@@ -294,8 +303,8 @@ public class audioStego extends Activity {
                         c.setVisibility(View.VISIBLE);
                         embedding.setVisibility(View.VISIBLE);
                         pas.setVisibility(View.VISIBLE);
-                        Toast.makeText(getApplicationContext(),"pva"+pvdCapacity(audio),Toast.LENGTH_LONG).show();
-                        Toast.makeText(getApplicationContext(),"new "+newMethodCapacity(audio),Toast.LENGTH_LONG).show();
+                      //  Toast.makeText(getApplicationContext(),"pva"+pvdCapacity(audio),Toast.LENGTH_LONG).show();
+                      //  Toast.makeText(getApplicationContext(),"new "+newMethodCapacity(audio),Toast.LENGTH_LONG).show();
                     }
                 }
 
@@ -917,6 +926,13 @@ public class audioStego extends Activity {
             }
         }
         return audio;
+    }
+    public String getnewText (int random){
+        String text="";
+        for(int l=0;l<random;l++){
+            text=text+"yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy";
+        }
+        return text;
     }
 }
 
