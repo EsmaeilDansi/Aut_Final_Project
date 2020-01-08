@@ -145,7 +145,6 @@ public class audioStego extends Activity {
             @Override
             public void onClick(View v) {
                 mp1.pause();
-                et.setText(getnewText(et.getText().length()));
                 if (et.getText() != null) {
                     message = message + et.getText().toString();
                     m = message.toCharArray();
@@ -204,15 +203,15 @@ public class audioStego extends Activity {
                 } else {
                     Toast.makeText(getApplicationContext(), "پیام را وارد کنید.", Toast.LENGTH_SHORT).show();
                 }
-                mse.setText(""+mse(audio1,stego,getblock()));
-                psnr.setText(""+psnr(audio1,stego,getblock()));
+              //  mse.setText(""+mse(audio1,stego,getblock()));
+              //  psnr.setText(""+psnr(audio1,stego,getblock()));
                 embedding.setVisibility(View.INVISIBLE);
                 c.setVisibility(View.INVISIBLE);
                 e.setVisibility(View.VISIBLE);
                 share.setVisibility(View.VISIBLE);
                 g.setVisibility(View.VISIBLE);
-                et.setText(""+audio.length);
-                pas.setText(""+getblock());
+              //  et.setText(""+audio.length);
+              //  pas.setText(""+getblock());
 
               //  Toast.makeText(getApplicationContext(),""+getblock(),Toast.LENGTH_LONG).show();
               //  Toast.makeText(getApplicationContext(),""+audio.length,Toast.LENGTH_LONG).show();
