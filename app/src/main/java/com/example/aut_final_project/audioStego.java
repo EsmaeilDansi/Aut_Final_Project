@@ -30,7 +30,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.concurrent.ThreadLocalRandom;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -44,9 +43,9 @@ import static java.lang.Math.log10;
 import static java.lang.Math.pow;
 
 public class audioStego extends Activity {
-    Button b, c, embedding, e, g, share;
+    Button choice, c, embedding, e, quality, share;
     RadioButton rb1, rb2;
-    EditText et, pas;
+    EditText messageText, pas;
     MediaPlayer mp1, mp2;
     int p1 = 1;
     int p2 = 1;
@@ -71,13 +70,13 @@ public class audioStego extends Activity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.audiostego);
-        b = (Button) findViewById(R.id.bt_2);
+        choice = (Button) findViewById(R.id.bt_2);
         c = (Button) findViewById(R.id.bt_3);
         embedding = (Button) findViewById(R.id.bt_4);
         e = (Button) findViewById(R.id.bt_5);
-        g = (Button) findViewById(R.id.bt_6);
+        quality = (Button) findViewById(R.id.bt_6);
         pas=(EditText)findViewById(R.id.key);
-        et = (EditText) findViewById(R.id.et_1);
+        messageText = (EditText) findViewById(R.id.et_1);
         rb1 = (RadioButton) findViewById(R.id.rb_1);
         rb2 = (RadioButton) findViewById(R.id.rb_2);
         mse=(TextView)findViewById(R.id.mse) ;
@@ -105,7 +104,7 @@ public class audioStego extends Activity {
 
         }
 
-        b.setOnClickListener(new View.OnClickListener() {
+        choice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -145,8 +144,8 @@ public class audioStego extends Activity {
             @Override
             public void onClick(View v) {
                 mp1.pause();
-                if (et.getText() != null) {
-                    message = message + et.getText().toString();
+                if (messageText.getText() != null) {
+                    message = message + messageText.getText().toString();
                     m = message.toCharArray();
                     for (int i = 0; i < m.length; i++) {
                         String h = Integer.toBinaryString(m[i]);
@@ -157,7 +156,7 @@ public class audioStego extends Activity {
                         }
                         bit = h + bit;
                         h = "";
-                        et.setText("");
+                        messageText.setText("");
                     }
                     n = new int[bit.length()];
                     for (int i = 0; i < bit.length(); i++) {
@@ -180,7 +179,6 @@ public class audioStego extends Activity {
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-                     //Toast.makeText(getApplicationContext(), "پیام " + message + " در صوت درج شد .", Toast.LENGTH_LONG).show();
                         message = "";
 
                     }
@@ -197,24 +195,16 @@ public class audioStego extends Activity {
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-                      //  Toast.makeText(getApplicationContext(), "پیام " + message + " در صوت درج شد .", Toast.LENGTH_LONG).show();
                         message = "";
                     }
                 } else {
                     Toast.makeText(getApplicationContext(), "پیام را وارد کنید.", Toast.LENGTH_SHORT).show();
                 }
-              //  mse.setText(""+mse(audio1,stego,getblock()));
-              //  psnr.setText(""+psnr(audio1,stego,getblock()));
                 embedding.setVisibility(View.INVISIBLE);
                 c.setVisibility(View.INVISIBLE);
                 e.setVisibility(View.VISIBLE);
                 share.setVisibility(View.VISIBLE);
-                g.setVisibility(View.VISIBLE);
-              //  et.setText(""+audio.length);
-              //  pas.setText(""+getblock());
-
-              //  Toast.makeText(getApplicationContext(),""+getblock(),Toast.LENGTH_LONG).show();
-              //  Toast.makeText(getApplicationContext(),""+audio.length,Toast.LENGTH_LONG).show();
+                quality.setVisibility(View.VISIBLE);
             }
         });
         e.setOnClickListener(new View.OnClickListener() {
@@ -231,7 +221,7 @@ public class audioStego extends Activity {
                 }
             }
         });
-        g.setOnClickListener(new View.OnClickListener() {
+        quality.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (stego == null) {
@@ -298,7 +288,7 @@ public class audioStego extends Activity {
                         audio1 = getbyte(audio_file);
                         e.setVisibility(View.INVISIBLE);
                         share.setVisibility(View.INVISIBLE);
-                        g.setVisibility(View.INVISIBLE);
+                        quality.setVisibility(View.INVISIBLE);
                         c.setVisibility(View.VISIBLE);
                         embedding.setVisibility(View.VISIBLE);
                         pas.setVisibility(View.VISIBLE);

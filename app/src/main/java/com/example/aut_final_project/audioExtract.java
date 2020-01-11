@@ -114,7 +114,6 @@ public class audioExtract extends Activity {
                             String message = back(decoding(audio));
                             tv.setText(message);
                             Toast.makeText(getApplicationContext(), "" + message, Toast.LENGTH_LONG).show();
-                           // Toast.makeText(getApplicationContext(), "الگوریتم pvd ", Toast.LENGTH_SHORT).show();
 
                         }
                         if ((int) audio[480] == -7) {
@@ -129,11 +128,9 @@ public class audioExtract extends Activity {
                                 }
 
                             }
-                        //    Toast.makeText(getApplicationContext(),""+len,Toast.LENGTH_LONG).show();
                             String message = back(decoding2(audio));
                             tv.setText(message);
                             Toast.makeText(getApplicationContext(), "" + message, Toast.LENGTH_LONG).show();
-                          //  Toast.makeText(getApplicationContext(), "الگوریتم جدید", Toast.LENGTH_LONG).show();
                         } else if (audio[480] != -6 & audio[480] != -7) {
                             Toast.makeText(getApplicationContext(), "درج صورت نگرفته است ", Toast.LENGTH_LONG).show();
                         }
